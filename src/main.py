@@ -1,6 +1,12 @@
 import psutil, os, logging, time, threading, json, prettytable
 from simple_term_menu import TerminalMenu
+from functions import print_menu, exit_program
 
+try:
+    from simple_term_menu import TerminalMenu
+    USE_TERMINAL_MENU = True
+except ImportError:
+    USE_TERMINAL_MENU = False
 
 def print_menu():
     print("-" * 24)
@@ -13,23 +19,28 @@ def print_menu():
     print("5. Check Alarms")
     print("6. ")
 
-#def list_alarms()
 
-def exit_program():
-    clear_consol()
-    print("You choose to exit!\n")
-    print(input("Tryck Enter för att avsluta..."))
+#def list_alarms()
+options = ["System Overview", "Start Surveillance", "Check Alarms", "Remove Alarms", "Exit"]
 
 def main_menu():
-    options = ["entry 1", "entry 2", "entry 3"]
-    terminal_menu = TerminalMenu(options)
-    menu_entry_index = terminal_menu.show()
-    print(f"You have selected {options[menu_entry_index]}!")
     alarms = []
     while True:
-        print_menu()
-        choice = input("Choose a number(1-5): ")
+        if use_terminal_menu:
+            from simple_term_menu import TerminalMenu
+            terminal_menu = TerminalMenu(options)
+            choice_index = terminal_menu.show()
+        else:
+            print_menu(options)
+            choice = input("Choose a number: ")
+            if choice.isdigit():
+                choice_index = int(choice) - 1
+            else:
+                print("Invalid input!")
+                continue
         match choice:
+            case "0":
+                pass
             case "1":
                 pass
             case "2":
@@ -37,8 +48,6 @@ def main_menu():
             case "3":
                 pass
             case "4":
-                pass
-            case "5":
                 pass
         exit_program()
         sys.exit()
