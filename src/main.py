@@ -26,18 +26,6 @@ options = ["System Overview", "Start Surveillance", "Check Alarms", "Remove Alar
 def main_menu():
     alarms = []
     while True:
-<<<<<<< HEAD
-        print("-------------------------")
-        print("--- Systemoverview ---")
-        print("\n1. Starta overview")
-        print("2. Check Alarms")
-        print("3. Check Alarms")
-        print("4. Check Alarms")
-        print("5. Check Alarms")
-        print("6. Check Alarms")
-        
-        choice = input("\nChoose a number: (1-6)")
-=======
         if use_terminal_menu:
             from simple_term_menu import TerminalMenu
             terminal_menu = TerminalMenu(options)
@@ -64,7 +52,7 @@ def main_menu():
         exit_program()
         sys.exit()
         choice = input("\nVälj ett alternativ i Menyn (1-6)")
->>>>>>> b5315d9a0e08710b79b759bc15bc66c578b955df
+
 
         if choice == "1":
             print("Start Overview! skall lägga in funktion")
