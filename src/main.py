@@ -26,8 +26,7 @@ options = ["System Overview", "Start Surveillance", "Check Alarms", "Remove Alar
 def main_menu():
     alarms = []
     while True:
-        if use_terminal_menu:
-            from simple_term_menu import TerminalMenu
+        if USE_TERMINAL_MENU:
             terminal_menu = TerminalMenu(options)
             choice_index = terminal_menu.show()
         else:
