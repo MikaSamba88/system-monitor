@@ -1,10 +1,15 @@
-import psutil, os, logging, time, threading, json, prettytable
-from simple_term_menu import TerminalMenu
-from functions import print_menu, exit_program, display_system_status, clear_consol
-from storage import save, load
-from alarms import alarm
+import os, logging, time
+
+import psutil
 from prettytable import PrettyTable
 
+
+from functions import print_menu, exit_program, display_system_status, clear_consol
+from storage import save, load
+from alarms import Alarm, AlarmManager
+from monitoring import Monitor
+
+manager = AlarmManager()
 
 try:
     from simple_term_menu import TerminalMenu
@@ -12,7 +17,7 @@ try:
 except ImportError:
     USE_TERMINAL_MENU = False
 
-options = ["System Overview", "Start Surveillance", "Add Alarms", "Check Alarms", "Remove Alarms", "Exit"]
+options = ["Start Monitoring", "List Active Monitoring", "Create Alarms", "Show Alarms", "Start monitoring Mode", "Remove Alarms", "Exit"]
 
 
 def main_menu():
@@ -38,17 +43,33 @@ def main_menu():
         print(f"\nYou chose: {options[choice_index]}\n")               
         match choice_index:
             case 0:
-                display_system_status()
+                print("Start Monitoring selected: ")
+                Monitor.start_monitoring()
             case 1:
-                print("Start Surveillance selected")
+                print("List Active Monitoring selected: ")
+                Monitor.list_active_monitoring()
             case 2:
-                print("Add Alarm")
-                alarm()
+                print("Create Alarms selected: ")
+                try:
+                    alarm_type = input("Enter alarm type (cpu/memory/disk): ").lower()
+                    level = int(input("Enter alarm level (1-100): "))
+                    manager.add_alarms(alarm_type, level)
+                except ValueError:
+                    print("You must enter a number between 1 and 100.")
+                    input("Press Enter to continue...")
             case 3:
-                print("Check Alarms selected: ")
+                print("Show Alarms selected")
+                print("\nConfigured Alarms:")
+                manager.list_alarms()
+                input("Press Enter to continue to main manu...")
             case 4:
-                print("Remove Alarms selected")
+                print("Start Monitoring Mode selected")
+                Monitor.monitoring_mode()
             case 5:
+                print("Remove Alarms selected")
+                manager.remove_alarm()
+                input("Press Enter to return to main manu...")
+            case 6:
                 exit_program()
                 break
 

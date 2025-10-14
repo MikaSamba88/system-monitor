@@ -38,27 +38,18 @@ def display_system_status():
 
 
 
-def list_alarms():
-    pass
-
-
-
-
-def add_alarms():
-    pass
-
-
 
 def print_menu():
     print("=" * 24)
     print("==== Systemoverview ====")
     print("=" * 24)
-    print("\n1. System overview")
-    print("2. Start Surveillance")
-    print("3. Check Alarms")
-    print("4. Remove Alarms ")
-    print("5. Check Alarms")
-    print("6. ")
+    print("\n1. Start Monitoring")
+    print("2. List Active Monitoring")
+    print("3. Create Alarms")
+    print("4. Show Alarms ")
+    print("5. Start monitoring Mode")
+    print("6. Remove Alarms")
+    print("7. Exit")
 
 
 def exit_program():

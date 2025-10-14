@@ -11,7 +11,7 @@ def save(alarms):
 
 def load():
     if not DATA_PATH.exists():
-        return {"CPU": [], "Memory": [], "Disk": []}
+        return {"cpu": [], "memory": [], "disk": []}
     with open(DATA_PATH, "r") as file:
         return json.load(file)
 
