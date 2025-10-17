@@ -9,7 +9,7 @@ class Monitor:
     def start_monitoring(cls):
         cls.monitoring_active = True
         print("Monitoring started")
-        input("Press Enter to return to the main manu...")
+        input("\nPress Enter to return to the main manu...")
     
     @classmethod
     def list_active_monitoring(cls):
@@ -22,20 +22,7 @@ class Monitor:
         if not cls.monitoring_active:
             print("No monitoring is active.")
         else:
-            cpu = psutil.cpu_percent(interval=1)
-            print(f"CPU Usage: {cpu}%")
-
-            memory = psutil.virtual_memory()
-            used_gb = memory.used / (1024 ** 3)
-            total_gb = memory.total / (1024 ** 3)
-            print(f"Memory Usage: {memory.percent}% ({used_gb:.1f} GB out of {total_gb:.1f} GB used)")
-
-            disk = psutil.disk_usage('/')
-            used_disk = disk.used / (1024 ** 3)
-            total_disk = disk.total / (1024 ** 3)
-            print(f"Disk Usage:{disk.percent}% ({used_disk:.0f} GB out of {total_disk:.0f} GB used)")
-
-        input("\nPress Enter to continue...")
+            display_system_status()
 
     @classmethod
     def monitoring_mode(cls):

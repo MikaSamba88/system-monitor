@@ -52,6 +52,10 @@ def print_menu():
     print("7. Exit")
 
 
+def enter_input():
+    print(input)
+
+
 def exit_program():
     clear_consol()
     print("You choose to exit!\n")
