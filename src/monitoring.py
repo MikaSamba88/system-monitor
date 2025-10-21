@@ -17,7 +17,7 @@ class Monitor:
         print("=" * 24)
         print("==== Systemoverview ====")
         print("=" * 24)
-        print("=== Active Monitoring ===\n")
+        print("\n=== Active Monitoring ===\n")
 
         if not cls.monitoring_active:
             print("No monitoring is active.")
@@ -31,7 +31,7 @@ class Monitor:
             input("\nPress Enter to return to main...")
             return
 
-        print("Monitoring mode started. Press control + C to stop and return to main menu.\n")
+        print("Press control + C to stop and return to main menu.\n")
         try:
             while True:
                 cpu = psutil.cpu_percent(interval=2)
