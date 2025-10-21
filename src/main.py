@@ -19,20 +19,21 @@ class SystemOverviewApp:
         except ImportError:
             self.USE_TERMINAL_MENU = False
 
-        self.options = ["1. Start Monitoring", 
-                   "2. List Active Monitoring",
-                   "3. Create Alarms",
-                   "4. Show Alarms", 
-                   "5. Start monitoring Mode",
-                   "6. Remove Alarms",
-                   "7. Logg",
-                   "8. Exit"]
+        self.options = ["Start Monitoring", 
+                   "List Active Monitoring",
+                   "Create Alarms",
+                   "Show Alarms", 
+                   "Start monitoring Mode",
+                   "Remove Alarms",
+                   "Logg",
+                   "Exit"]
         
-        self.alarm_menu = ["1. CPU Alarm",
-                           "2. Memory Alarm",
-                           "3. Disk Alarm",
-                           "4. Back to Main Menu"]
-    def handle_alarm_creation():
+        self.alarms_menu = ["CPU Alarm",
+                           "Memory Alarm",
+                           "Disk Alarm",
+                           "Back to Main Menu"]
+        
+    def handle_alarm_creation(self):
         while True:
             try:
                 level = int(input("Set % Alarm (1-100): "))
@@ -41,13 +42,16 @@ class SystemOverviewApp:
                 print("❌ Wrong input! Must be an integer between 1- 100. ❌")
                 input("Press Enter to Continue...")
                 clear_consol()
-    def create_alarms_menu():
+    def create_alarms_menu(self):
         alarm_type_map = {
             0: "cpu",
             1: "memory",
             2: "disk"
         }
-        
+        while True:
+            if self.USE_TERMINAL_MENU:
+                terminal_menu = TerminalMenu(self.alarms_menu, title="Choose Alarm Type: ")
+                choice_index = terminal_menu.show()
 
     def run_menu(self):
         while True:
@@ -61,12 +65,9 @@ class SystemOverviewApp:
                 terminal_menu = TerminalMenu(self.options)
                 choice_index = terminal_menu.show()
             else:
-                print_menu()
-                choice = input("Välj ett nummer: ")
-                if choice.isdigit() and 1 <= int(choice) <= len(self.options):
-                    choice_index = int(choice) - 1
-                else:
-                    print("Felaktig inmatning!")
+                print_menu(self.options)
+                choice_index = get_numeric_menu_choice(self.options)
+                if choice_index is None:
                     continue
 
             print(f"\nYou chose: {self.options[choice_index]}\n")               
@@ -78,7 +79,6 @@ class SystemOverviewApp:
                     print("List Active Monitoring selected: ")
                     Monitor.list_active_monitoring()
                 case 2:
-                    print("Create Alarms selected: ")
                     self.create_alarms_menu()
                 case 3:
                     print("Show Alarms selected")
