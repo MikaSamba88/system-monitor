@@ -5,8 +5,6 @@ from prettytable import PrettyTable
 
 alarms = load()
 
-def add_alarm():
-    pass
 
 def clear_consol():
     if os.name == 'nt':
@@ -39,21 +37,33 @@ def display_system_status():
 
 
 
-def print_menu():
+def print_menu(options):
     print("=" * 24)
     print("==== Systemoverview ====")
     print("=" * 24)
-    print("\n1. Start Monitoring")
-    print("2. List Active Monitoring")
-    print("3. Create Alarms")
-    print("4. Show Alarms ")
-    print("5. Start monitoring Mode")
-    print("6. Remove Alarms")
-    print("7. Exit")
+    
+    for i in enumerate(options):
+        print(f"{i + 1}. {options}")
 
+def get_numeric_menu_choice(options):
+    for i in enumerate(options):
+        print(f"{i + 1}. {options}")
 
-def enter_input():
-    print(input)
+    choice = input("\nChoose a number: ")
+    if choice.isdigit():
+        choice_num = int(choice)
+
+        if 1 <= choice_num <= len(options):
+            return choice_num - 1
+        else:
+            print("❌Invalid Choice! Number outside of range.")
+    else:
+        print("❌Invalid input! Have to be a number.")
+    time.sleep(1)
+    return None
+
+# def enter_input():
+#     print(input)
 
 
 def exit_program():
