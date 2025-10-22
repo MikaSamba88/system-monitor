@@ -1,4 +1,6 @@
 from storage import save, load
+from functions import *
+
 
 class Alarm:
     def __init__(self, alarm_type, level):
@@ -23,7 +25,7 @@ class AlarmManager:
         self.alarms[alarm_type].append(level)
         self.alarms[alarm_type].sort()
         save(self.alarms)
-        print(f"✅{alarm_type.capitalize()} larm tillagt på {level}%")
+        print(f"✅{alarm_type.capitalize()} Alarm added: {level}%")
 
     def list_alarms(self):
         index = 1
@@ -35,30 +37,34 @@ class AlarmManager:
             print("No Alarms is set!")
     
     def remove_alarm(self):
-        print("\nActive Alarms:")
-        index_map = {}
-        index = 1
+        while True:
+            clear_consol()
+            heading_print()
+            print("\nActive Alarms:")
+            index_map = {}
+            index = 1
 
-        for alarm_type, levels in self.alarms.items():
-            for level in levels:
-                print(f"{index}. {Alarm(alarm_type, level)}")
-                index_map[index] = (alarm_type, level)
-                index += 1
+            for alarm_type, levels in self.alarms.items():
+                for level in levels:
+                    print(f"{index}. {alarm_type.capitalize()} Alarm on: {level}%")
+                    index_map[index] = (alarm_type, level)
+                    index += 1
 
-        if not index_map:
-            print("No Alarms to remove!")
-            return
-        
-        try:
-            choice = int(input("\nChoose a Alarm to remove:"))
-            if choice not in index_map:
-                print("UnValid choice!")
+            if not index_map:
+                print("No Alarms to remove!\n")
                 return
             
-            alarm_type, level = index_map[choice]
-            self.alarms[alarm_type].remove(level)
-            save(self.alarms)
-            print(f"Removed {alarm_type.capitalize()} larm {level}%")
-        except ValueError:
-            print("It must be a number.")
-    
+            try:
+                choice = int(input("\nChoose a Alarm to remove:"))
+                if choice not in index_map:
+                    print("UnValid choice!")
+                    return
+                
+                alarm_type, level = index_map[choice]
+                self.alarms[alarm_type].remove(level)
+                save(self.alarms)
+                print(f"❌Removed {alarm_type.capitalize()} larm {level}%")
+                input("\nPress Enter to continue...")
+            except ValueError:
+                print("It must be a number.")
+        
