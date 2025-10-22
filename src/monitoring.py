@@ -10,7 +10,7 @@ class Monitor:
     @classmethod
     def start_monitoring(cls):
         cls.monitoring_active = True
-        print("Monitoring started")
+        print("✅Monitoring started!")
         input("\nPress Enter to return to the main manu...")
     
     @classmethod
@@ -22,7 +22,7 @@ class Monitor:
         print("\n=== Active Monitoring ===\n")
 
         if not cls.monitoring_active:
-            print("No monitoring is active.")
+            print("❌ No monitoring is active.")
             input("\nPress Enter to continue...")
         else:
             display_system_status()
