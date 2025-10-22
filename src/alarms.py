@@ -57,7 +57,7 @@ class AlarmManager:
             try:
                 choice = int(input("\nChoose a Alarm to remove:"))
                 if choice not in index_map:
-                    print("UnValid choice!")
+                    print("❌ Unvalid choice!")
                     return
                 
                 alarm_type, level = index_map[choice]
