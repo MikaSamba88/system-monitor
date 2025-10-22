@@ -3,8 +3,11 @@ from simple_term_menu import TerminalMenu
 from storage import save, load
 from prettytable import PrettyTable
 
-alarms = load()
 
+def heading_print():
+    print("=" * 24)
+    print("==== Systemoverview ====")
+    print("=" * 24)
 
 def clear_consol():
     if os.name == 'nt':
@@ -65,6 +68,8 @@ def get_numeric_menu_choice(options):
 # def enter_input():
 #     print(input)
 
+def alarm_sound():
+    print("\a", end="")
 
 def exit_program():
     clear_consol()
