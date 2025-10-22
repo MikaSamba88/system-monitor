@@ -41,7 +41,7 @@ class SystemOverviewApp:
             except ValueError:
                 print("❌ Wrong input! Must be an integer between 1- 100. ❌")
                 input("Press Enter to Continue...")
-                clear_consol()
+               
 
     def create_alarms_menu(self):
         alarm_type_map = {
