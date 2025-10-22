@@ -42,6 +42,7 @@ class SystemOverviewApp:
                 print("❌ Wrong input! Must be an integer between 1- 100. ❌")
                 input("Press Enter to Continue...")
                 clear_consol()
+
     def create_alarms_menu(self):
         alarm_type_map = {
             0: "cpu",
@@ -52,13 +53,34 @@ class SystemOverviewApp:
             if self.USE_TERMINAL_MENU:
                 terminal_menu = TerminalMenu(self.alarms_menu, title="Choose Alarm Type: ")
                 choice_index = terminal_menu.show()
+            else:
+                print_menu(self.alarms_menu)
+                choice_index = get_numeric_menu_choice(self.alarms_menu)
+                if choice_index is None:
+                    continue
+            if choice_index is None or choice_index == len(self.alarms_menu) - 1:
+                return
+            try:
+                selected_type_display = self.alarms_menu[choice_index]
+                selected_type_key = alarm_type_map[choice_index]
+
+                print(f"Configure Alarms for: {selected_type_display}.")
+
+                level = self.handle_alarm_creation()
+
+                self.manager.add_alarms(selected_type_key, level)
+
+                input("Press Enter to continue...")
+
+            except KeyError:
+                print("Unexpected Error!")
+                input("Press Enter to continue...")
+
 
     def run_menu(self):
         while True:
             clear_consol()
-            print("=" * 24)
-            print("==== Systemoverview ====")
-            print("=" * 24)
+            heading_print()
             print("Choose an alternative:\n")
             
             if self.USE_TERMINAL_MENU:
@@ -73,7 +95,6 @@ class SystemOverviewApp:
             print(f"\nYou chose: {self.options[choice_index]}\n")               
             match choice_index:
                 case 0:
-                    print("Start Monitoring selected: ")
                     Monitor.start_monitoring()
                 case 1:
                     print("List Active Monitoring selected: ")
@@ -86,8 +107,7 @@ class SystemOverviewApp:
                     self.manager.list_alarms()
                     input("Press Enter to continue to main manu...")
                 case 4:
-                    print("Start Monitoring Mode selected")
-                    Monitor.monitoring_mode()
+                    Monitor.monitoring_mode(self.manager)
                 case 5:
                     print("Remove Alarms selected")
                     self.manager.remove_alarm()
